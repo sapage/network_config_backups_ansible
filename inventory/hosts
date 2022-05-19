@@ -1,0 +1,18 @@
+[ios]
+router	    ansible_host=1.1.1.1
+
+[brouter]
+
+.
+.
+.
+
+
+[nxos]
+
+
+[asa]
+
+[f5]
+
+[wlc]

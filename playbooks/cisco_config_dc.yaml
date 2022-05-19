@@ -1,0 +1,59 @@
+#/opt/rh/rh-python38/root/usr/local/bin/ansible-playbook -i /opt/prod_code/network_config_backups/inventory/hosts /opt/prod_code/network_config_backups/playbooks/cisco_config_backup.yaml
+
+
+---
+
+- name: Network backup
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    git_branch: /opt/Backups/dc/
+
+  tasks:
+
+    - name: 1.1 Git Synchronize with remote branch
+      command: git pull
+      args:
+        chdir: "{{ git_branch }}"
+      changed_when: false
+      run_once: yes
+
+    - name: "IOS CONFIG"
+      block:
+        - name: "2.0: Backup Cisco IOS devices From Inventory"
+          ios_command:
+            commands: show run
+          register: output_router
+
+        - name: SAVE IOS CONFIG
+          copy:
+            content: "{{ output_router.stdout[0] }}"
+            dest: "{{ git_branch }}{{ inventory_hostname }}.txt"
+        - name: replace    
+          replace:
+            path: "{{ git_branch }}{{ inventory_hostname }}.txt"
+            regexp: '^!Time.*$'
+      when: inventory_hostname in groups["dc"]
+
+- name: GIT SECTION
+  hosts: localhost
+
+  tasks:
+    - name: print time
+      command: date
+      register: time
+      changed_when: false
+      delegate_to: localhost
+      run_once: yes
+
+    - name: git commands
+      shell: |
+        git add --all .
+         git commit -m "updated on {{time.stdout}}"
+        git push
+      args:
+        chdir: /opt/Backups/
+      delegate_to: localhost
+      run_once: yes

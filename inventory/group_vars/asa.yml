@@ -1,0 +1,7 @@
+ansible_network_os: cisco.asa.asa
+ansible_user: xxx
+ansible_password: xxx
+ansible_become: yes
+ansible_become_method: enable
+ansible_become_pass: CHYGfTjwbNxCcGDmzfdzmk8mJw
+ansible_connection: network_cli

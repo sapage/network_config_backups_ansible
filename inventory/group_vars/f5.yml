@@ -1,0 +1,6 @@
+server: "{{ ansible_host }}"
+server_port: 443
+user: xxx
+password: xxx
+validate_certs: no
+transport: rest

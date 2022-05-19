@@ -1,0 +1,8 @@
+f5Provider:
+ server: "{{ ansible_host }}"
+ server_port: 443
+ user: "{{ f5User }}"
+ password: "{{ f5Pwd }}"
+ validate_certs: no
+ transport: rest
+  

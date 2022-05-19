@@ -1,0 +1,17 @@
+# netbox_inventory.yml file in YAML format
+# Example command line: ansible-inventory -v --list -i netbox_inventory.yml
+
+plugin: netbox.netbox.nb_inventory
+api_endpoint: https://netbox.racqgroup.local
+validate_certs: False
+config_context: False
+token: d3a51fe6e4ab6419c731ab0de11335c3682bcd06
+
+group_by:
+  - manufacturers
+query_filters:
+  - manufacturer: cisco
+#device_query_filters:
+#  - has_primary_ip: 'true'
+compose:
+  ansible_network_os: platform.slug

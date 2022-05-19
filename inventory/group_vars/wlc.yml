@@ -1,0 +1,6 @@
+ansible_network_os: ios
+ansible_user: xxx
+ansible_password: xxx
+ansible_authorize_password: xxx
+ansible_become: yes
+ansible_connection: network_cli

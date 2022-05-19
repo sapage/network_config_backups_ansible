@@ -1,0 +1,43 @@
+---
+
+- name: IOS ROUTERS
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    git_branch: /home/U009284/stash/infrastructure-networks/Backups/
+
+  tasks:
+    - name: IOS CONFIG
+      ios_command:
+        commands: show run
+      register: output_router
+
+    - name: SAVE IOS CONFIG
+      copy:
+        content: "{{ output_router.stdout[0] }}"
+        dest: "{{ git_branch }}{{ inventory_hostname }}.txt"
+      
+
+- name: GIT SECTION
+  hosts: localhost
+
+  tasks:
+
+    - name: print time
+      command: date
+      register: time
+      changed_when: false
+      delegate_to: localhost
+      run_once: yes
+
+    - name: git commands
+      shell: |
+        git add .
+        git commit -m "Device Backup on {{time.stdout}}"
+        git push
+      args:
+        chdir: /home/U009284/stash/infrastructure-networks/Backups/
+      delegate_to: localhost
+      run_once: yes
