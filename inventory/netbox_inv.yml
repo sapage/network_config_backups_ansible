@@ -2,7 +2,7 @@
 # Example command line: ansible-inventory -v --list -i netbox_inventory.yml
 
 plugin: netbox.netbox.nb_inventory
-api_endpoint: https://netbox.racqgroup.local
+api_endpoint: https://netbox.xxx.local
 validate_certs: False
 config_context: False
 token: xxx
