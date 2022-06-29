@@ -5,7 +5,7 @@ plugin: netbox.netbox.nb_inventory
 api_endpoint: https://netbox.racqgroup.local
 validate_certs: False
 config_context: False
-token: d3a51fe6e4ab6419c731ab0de11335c3682bcd06
+token: xxx
 
 group_by:
   - manufacturers
